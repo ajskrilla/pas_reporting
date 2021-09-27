@@ -1,0 +1,15 @@
+{
+    "debug_level": "INFO",
+    "tenants":[
+        {
+        "auth": "OAUTH",
+        "scope": "all",
+        "tenant": "https://ABC0123.my.centrify.net",
+        "body" : {
+            "appid" : "app",
+            "client_id": "apiuser@test.com",
+            "grant_type": "client_credentials"
+            }
+        }
+    ]
+}
