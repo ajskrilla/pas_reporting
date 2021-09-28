@@ -21,8 +21,6 @@ f = f_check()
 # Build cache
 c = Cache(args.Password, **f.loaded['tenants'][0])
 
-print(c.ten_info)
-
 # Security test
 sec_test(**c.ten_info)
 
