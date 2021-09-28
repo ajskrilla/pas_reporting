@@ -12,7 +12,7 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Save a query as a csv. Please give valid SQL query to tenant.")
 	parser.add_argument('-p','--Path', type=str, required=True, help= 'Path to the csv file. Point to csv in arg path and use forward slashes in the path if using windows.')
 	parser.add_argument('-q','--Query', type=str, required=True, help= 'Query against the tenant (i.e "Select * From Server").')
-	parser.add_argument('-pw','--Password', type=str, required=True, help= 'Password of service account from config file.')
+	parser.add_argument('-pw','--Password', type=str, required=False, help= 'Password of service account from config file.')
 	args = parser.parse_args()
 
 # Create the object for the file
@@ -20,6 +20,8 @@ f = f_check()
 
 # Build cache
 c = Cache(args.Password, **f.loaded['tenants'][0])
+
+print(c.ten_info)
 
 # Security test
 sec_test(**c.ten_info)

@@ -19,14 +19,17 @@ f = f_check()
 # For the OAUTH process
 
 class auth:
-    def __init__(self, password, **kwargs):
+    def __init__(self, *args, **kwargs):
         if kwargs['auth'].upper() == 'DMC':
             log.info('Setting auth headers for DMC......')
             self._headers = {}
             self._headers["X-CENTRIFY-NATIVE-CLIENT"] = 'true'
             self._headers['X-CFY-SRC' ]= 'python'
             try:
-                self._headers['Authorization']  = 'Bearer {scope}'.format(**kwargs)
+                log.info("DMC scope is: {scope}".format(**kwargs))
+                # Really did not want to do this
+                scope = gettoken(kwargs['scope'])
+                self._headers['Authorization']  = 'Bearer {0}'.format(scope)
             except KeyError:
                 log.error('Issue with getting DMC scope')
                 raise Exception
@@ -36,7 +39,7 @@ class auth:
             self.json_d = json.dumps(kwargs['body'])
             self.update = json.loads(self.json_d)
             self.update['scope'] = kwargs['scope']
-            self.update['client_secret'] = password
+            self.update['client_secret'] = '{0}'.format(*args)
             self._rheaders = {}
             self._rheaders['X-CENTRIFY-NATIVE-CLIENT'] = 'true'
             self._rheaders['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -60,12 +63,12 @@ class auth:
 # Cache class that utilizes the auth class
 
 class Cache:
-    def __init__(self, password, **kwargs):
+    def __init__(self, *args, **kwargs):
         # Make TTL setting to grab in conf file next to debug
         self._cache = TTLCache(maxsize=10, ttl=600)
         try:
             log.info("Building the cache..")
-            self._cache['header'] = auth(password, **kwargs).headers
+            self._cache['header'] = auth(*args, **kwargs).headers
             self._cache['tenant'] = kwargs['tenant']
         except Exception as e:
             log.error("Failed to build cache")
