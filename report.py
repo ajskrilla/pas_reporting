@@ -7,7 +7,7 @@ from auth_main.funct_tools import *
 from auth_main.logger import logging as log
 from auth_main.logger import f_check
 from auth_main.utility import Cache
-#https://developer.centrify.com/reference#post_servermanage-addaccounts
+
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Save a query as a csv. Please give valid SQL query to tenant.")
 	parser.add_argument('-p','--Path', type=str, required=True, help= 'Path to the csv file. Point to csv in arg path and use forward slashes in the path if using windows.')
