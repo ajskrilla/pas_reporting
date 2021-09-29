@@ -2,7 +2,7 @@ import requests
 import csv
 import json
 import traceback
-from .logger import logging as log
+from .utility import logging as log
 
 
 def boolize(v):
